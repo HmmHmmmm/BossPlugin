@@ -1,0 +1,16 @@
+name: BossPlugin
+version: 3.1
+api: 3.11.0
+author: HmmHmmmmm
+main: hmmhmmmm\boss\Boss
+website: https://github.com/HmmHmmmm/BossPlugin
+depend:
+- Slapper
+- PureEntitiesX
+
+permissions:
+  boss.command:
+    default: false
+    children:
+      boss.command:
+        default: op

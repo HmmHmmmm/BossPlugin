@@ -1,0 +1,20 @@
+#thai=ภาษาไทยนะจ้ะ
+#english=English language
+#You can edit in plugin_data/BossPlugin/language
+language: english
+
+#yml=Yaml, Information will be in plugin_data/BossPlugin/boss.yml
+#sqlite=SQLite3, Information will be in plugin_data/BossPlugin/boss.sqlite3
+bossdata-database: sqlite
+
+slapper-update: 5
+
+slapper-type: Human
+
+#It is now not unusable.
+#MySQL-Info:
+  #Host: 127.0.0.1
+  #User: Admin
+  #Password: Admin
+  #Database: BossPlugin
+  #Port: 3306

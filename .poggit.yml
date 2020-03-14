@@ -1,0 +1,16 @@
+--- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/HmmHmmmm/BossPlugin
+build-by-default: true
+branches:
+- master
+projects:
+  BossPlugin:
+    path: ""
+    icon: "images/icon.png"
+    libs:
+    - src: thebigsmilexd/customui/customui
+      version: ^3.0.0
+    - src: poggit/libasynql/libasynql
+      version: ^3.2.0
+    - src: CortexPE/Commando/Commando
+      version: ^0.5
+...
