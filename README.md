@@ -1,4 +1,4 @@
-## QuestPlugin
+## BossPlugin
 
 
 [Language English](#english)
@@ -36,12 +36,13 @@ this plugin will work
 
 **Features of plugin**<br>
 - Is a plugin to create boss using [EntityType](#entitytype)
+- Entity will not overlap with PureEntitiesX
 - support database Yaml and SQLite
 - Have language thai and english (You can edit the language you don't like at, `plugin_data/QuestPlugin/language`)
 
 
 **How to use**<br>
-- ?
+- https://youtu.be/wr5IPWTfFdQ
 
 
 **Command**<br>
