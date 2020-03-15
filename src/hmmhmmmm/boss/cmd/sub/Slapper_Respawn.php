@@ -12,17 +12,21 @@ use pocketmine\Player;
 use pocketmine\command\CommandSender;
 
 class Slapper_Respawn extends SubCommand{
-   
-   public function getPrefix(): string{
-      return Boss::getInstance()->getPrefix();
+
+   public function __construct(Boss $plugin){
+      parent::__construct($plugin, "slapper_respawn");
    }
    
-   protected function prepare(): void{
+   public function getPrefix(): string{
+      return $this->getPlugin()->getPrefix();
+   }
+   
+   public function prepare(): void{
       $this->registerArgument(0, new StringArgs("name", true));
    }
    
    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void{
-      $plugin = Boss::getInstance();
+      $plugin = $this->getPlugin();
       $lang = $plugin->getLanguage();
       if(!$sender instanceof Player){
          $this->sendConsoleError($sender);

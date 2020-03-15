@@ -10,11 +10,15 @@ use pocketmine\command\CommandSender;
 
 class Help extends SubCommand{
 
-   public function getPrefix(): string{
-      return Boss::getInstance()->getPrefix();
+   public function __construct(Boss $plugin){
+      parent::__construct($plugin, "help");
    }
    
-   protected function prepare(): void{
+   public function getPrefix(): string{
+      return $this->getPlugin()->getPrefix();
+   }
+   
+   public function prepare(): void{
    }
    
    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void{
@@ -22,7 +26,7 @@ class Help extends SubCommand{
    }
    
    public function sendHelp(CommandSender $sender): void{
-      $plugin = Boss::getInstance();
+      $plugin = $this->getPlugin();
       $lang = $plugin->getLanguage();
       $sender->sendMessage($this->getPrefix()." : §fCommand");
       $sender->sendMessage("§a".$lang->getTranslate(

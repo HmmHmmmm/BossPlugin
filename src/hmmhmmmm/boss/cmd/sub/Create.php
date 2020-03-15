@@ -16,13 +16,17 @@ use pocketmine\command\CommandSender;
 use pocketmine\level\Location;
 
 class Create extends SubCommand{
-   
-   public function getPrefix(): string{
-      return Boss::getInstance()->getPrefix();
+
+   public function __construct(Boss $plugin){
+      parent::__construct($plugin, "create");
    }
    
-   protected function prepare(): void{
-      $plugin = Boss::getInstance();
+   public function getPrefix(): string{
+      return $this->getPlugin()->getPrefix();
+   }
+   
+   public function prepare(): void{
+      $plugin = $this->getPlugin();
       $lang = $plugin->getLanguage();
       $this->registerArgument(0, new StringArgs("name", true));
       $entityType = [];
@@ -34,7 +38,7 @@ class Create extends SubCommand{
    }
    
    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void{
-      $plugin = Boss::getInstance();
+      $plugin = $this->getPlugin();
       $lang = $plugin->getLanguage();
       if(!$sender instanceof Player){
          $this->sendConsoleError($sender);

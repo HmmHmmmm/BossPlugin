@@ -6,8 +6,8 @@ use revivalpmmp\pureentities\entity\BaseEntity;
 use hmmhmmmm\boss\utils\BossUtils;
 
 use pocketmine\entity\Entity;
-use pocketmine\entity\object\ItemEntity;
 use pocketmine\level\Location;
+use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\StringTag;
 
 class BossManager{
@@ -34,8 +34,10 @@ class BossManager{
       $plugin = Boss::getInstance();
       $level = BossData::getSpawn($name)->getLevel();
       foreach($level->getEntities() as $entity){
-         if($entity->namedtag->hasTag("Boss".BossData::getEntityType($name), StringTag::class)){
-            $entity->close();
+         if($entity->namedtag instanceof CompoundTag){
+            if($entity->namedtag->hasTag("Boss".BossData::getEntityType($name), StringTag::class)){
+               $entity->close();
+            }
          }
       }
    }
@@ -49,8 +51,10 @@ class BossManager{
       }
       $entityCount = 0;
       foreach($level->getEntities() as $entity){
-         if($entity->namedtag->hasTag("Boss".BossData::getEntityType($name), StringTag::class)){
-            $entityCount++;
+         if($entity->namedtag instanceof CompoundTag){
+            if($entity->namedtag->hasTag("Boss".BossData::getEntityType($name), StringTag::class)){
+               $entityCount++;
+            }
          }
       }
       if($entityCount == 0){
@@ -86,8 +90,10 @@ class BossManager{
       }
       if(count($level->getPlayers()) !== 0){
          foreach($level->getEntities() as $entity){
-            if($entity->namedtag->hasTag("Boss".BossData::getEntityType($name), StringTag::class)){
-               $entity->close();
+            if($entity->namedtag instanceof CompoundTag){
+               if($entity->namedtag->hasTag("Boss".BossData::getEntityType($name), StringTag::class)){
+                  $entity->close();
+               }
             }
          }
          BossManager::spawn($name);

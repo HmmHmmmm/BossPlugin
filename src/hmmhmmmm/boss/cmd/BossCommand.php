@@ -16,53 +16,31 @@ use CortexPE\Commando\BaseCommand;
 
 use pocketmine\Player;
 use pocketmine\command\CommandSender;
+use pocketmine\command\PluginIdentifiableCommand;
+use pocketmine\plugin\Plugin;
 
-class BossCommand extends BaseCommand{
+class BossCommand extends BaseCommand implements PluginIdentifiableCommand{
+   private $plugin;
    
-   public function __construct(){
+   public function __construct(Boss $plugin){
+      $this->plugin = $plugin;
       parent::__construct("boss", "open ui");
-      $this->setPermission("boss.command");
    }
    
-   protected function prepare(): void{
-      $plugin = Boss::getInstance();
+   public function getPlugin(): Plugin{
+      return $this->plugin;
+   }
+  
+   public function prepare(): void{
+      $this->setPermission("boss.command");
       $subClass = [
-         new Help("help",
-            $plugin->getLanguage()->getTranslate(
-              "command.help.description"
-            )
-         ),
-         new Info("info",
-            $plugin->getLanguage()->getTranslate(
-              "command.info.description"
-            )
-         ),
-         new Create("create",
-            $plugin->getLanguage()->getTranslate(
-              "command.create.description"
-            )
-         ),
-         new Remove("remove", 
-            $plugin->getLanguage()->getTranslate(
-              "command.remove.description"
-            )
-         ),
-         new Respawn("respawn",
-            $plugin->getLanguage()->getTranslate(
-              "command.respawn.description"
-            )
-         ),
-         new SetRespawn("setrespawn",
-            $plugin->getLanguage()->getTranslate(
-              "command.setrespawn.description"
-            )
-         ),
-         new Slapper_Respawn("slapper_respawn",
-            $plugin->getLanguage()->getTranslate(
-              "command.slapper_respawn.description"
-            ),
-            ["npc_respawn"]
-         ),
+         new Help($this->getPlugin()),
+         new Info($this->getPlugin()),
+         new Create($this->getPlugin()),
+         new Remove($this->getPlugin()),
+         new Respawn($this->getPlugin()),
+         new SetRespawn($this->getPlugin()),
+         new Slapper_Respawn($this->getPlugin()),
       ];
       foreach($subClass as $sub){
          $this->registerSubCommand($sub);
@@ -70,7 +48,7 @@ class BossCommand extends BaseCommand{
    }
    
    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void{
-      $plugin = Boss::getInstance();
+      $plugin = $this->getPlugin();
       $lang = $plugin->getLanguage();
       if($sender instanceof Player){
          $plugin->getBossForm()->Menu($sender);
@@ -78,9 +56,9 @@ class BossCommand extends BaseCommand{
             "command.sendHelp.empty"
          ));
       }else{
-         $class = new HelpSub("help");
+         $class = new Help($plugin);
          $class->sendHelp($sender);  
       }
    }
-   
+  
 }

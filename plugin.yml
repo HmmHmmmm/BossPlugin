@@ -1,5 +1,5 @@
 name: BossPlugin
-version: 3.1
+version: 3.3
 api: 3.11.0
 author: HmmHmmmmm
 main: hmmhmmmm\boss\Boss
@@ -9,7 +9,7 @@ depend:
 - PureEntitiesX
 
 permissions:
-  boss.command:
+  boss:
     default: false
     children:
       boss.command:

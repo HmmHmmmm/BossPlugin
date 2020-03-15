@@ -148,14 +148,50 @@ class Boss extends PluginBase{
          return;
       }else{
          $this->language = new Language($this, $langConfig);
-         $this->bossform = new BossForm($this);
-         foreach($this->entityClass as $bossClass){
-            Entity::registerEntity($bossClass);
-         }
-         $this->getServer()->getCommandMap()->register("BossPlugin", new BossCommand());
+         
          $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
          $this->getScheduler()->scheduleRepeatingTask(new SlapperUpdateTask($this), (20 * $this->getConfig()->getNested("slapper-update")));
          $this->getScheduler()->scheduleRepeatingTask(new BossTask($this), 20);
+      }
+      if($this->getServer()->getPluginManager()->getPlugin("PureEntitiesX") === null){
+         $this->getLogger()->error($this->language->getTranslate("notfound.plugin", ["PureEntitiesX"]));
+         $this->getServer()->getPluginManager()->disablePlugin($this);
+         return;
+      }else{
+         $this->mobai = $this->getServer()->getPluginManager()->getPlugin("PureEntitiesX");
+         foreach($this->entityClass as $bossClass){
+            Entity::registerEntity($bossClass);
+         }
+      }
+      if($this->getServer()->getPluginManager()->getPlugin("Slapper") === null){
+         $this->getLogger()->error($this->language->getTranslate("notfound.plugin", ["Slapper"]));
+         $this->getServer()->getPluginManager()->disablePlugin($this);
+         return;
+      }else{
+         $this->slapper = $this->getServer()->getPluginManager()->getPlugin("Slapper");
+      }
+      if(!class_exists(XenialdanCustomUI::class)){
+         $this->getLogger()->error($this->language->getTranslate("notfound.libraries", ["CustomUI"]));
+         $this->getServer()->getPluginManager()->disablePlugin($this);
+         return;
+      }else{
+         $this->bossform = new BossForm($this);
+      }
+      if(!class_exists(PacketHooker::class)){
+         $this->getLogger()->error($this->language->getTranslate("notfound.libraries", ["Commando"]));
+         $this->getServer()->getPluginManager()->disablePlugin($this);
+         return;
+      }else{
+         if(!PacketHooker::isRegistered()){
+            PacketHooker::register($this);
+            $this->getServer()->getCommandMap()->register("BossPlugin", new BossCommand($this));
+         }
+      }
+      if(!class_exists(libasynql::class)){
+         $this->getLogger()->error($this->language->getTranslate("notfound.libraries", ["Libasynql"]));
+         $this->getServer()->getPluginManager()->disablePlugin($this);
+         return;
+      }else{
          switch($this->getConfig()->getNested("bossdata-database")){
             case "sqlite":
                $this->database = new BossData_SQLite("SQLite");
@@ -170,39 +206,6 @@ class Boss extends PluginBase{
                $this->database = new BossData_YML("Yaml");
                break;
          }
-      }
-      if($this->getServer()->getPluginManager()->getPlugin("PureEntitiesX") === null){
-         $this->getLogger()->error($this->language->getTranslate("notfound.plugin", ["PureEntitiesX"]));
-         $this->getServer()->getPluginManager()->disablePlugin($this);
-         return;
-      }else{
-         $this->mobai = $this->getServer()->getPluginManager()->getPlugin("PureEntitiesX");
-      }
-      if($this->getServer()->getPluginManager()->getPlugin("Slapper") === null){
-         $this->getLogger()->error($this->language->getTranslate("notfound.plugin", ["Slapper"]));
-         $this->getServer()->getPluginManager()->disablePlugin($this);
-         return;
-      }else{
-         $this->slapper = $this->getServer()->getPluginManager()->getPlugin("Slapper");
-      }
-      if(!class_exists(XenialdanCustomUI::class)){
-         $this->getLogger()->error($this->language->getTranslate("notfound.libraries", ["CustomUI"]));
-         $this->getServer()->getPluginManager()->disablePlugin($this);
-         return;
-      }
-      if(!class_exists(PacketHooker::class)){
-         $this->getLogger()->error($this->language->getTranslate("notfound.libraries", ["Commando"]));
-         $this->getServer()->getPluginManager()->disablePlugin($this);
-         return;
-      }else{
-         if(!PacketHooker::isRegistered()){
-            PacketHooker::register($this);
-         }
-      }
-      if(!class_exists(libasynql::class)){
-         $this->getLogger()->error($this->language->getTranslate("notfound.libraries", ["Libasynql"]));
-         $this->getServer()->getPluginManager()->disablePlugin($this);
-         return;
       }
    }
    

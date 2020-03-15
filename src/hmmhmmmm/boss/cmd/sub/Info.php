@@ -9,16 +9,20 @@ use pocketmine\Player;
 use pocketmine\command\CommandSender;
 
 class Info extends SubCommand{
-   
-   public function getPrefix(): string{
-      return Boss::getInstance()->getPrefix();
+
+   public function __construct(Boss $plugin){
+      parent::__construct($plugin, "info");
    }
    
-   protected function prepare(): void{
+   public function getPrefix(): string{
+      return $this->getPlugin()->getPrefix();
+   }
+   
+   public function prepare(): void{
    }
    
    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void{
-      $plugin = Boss::getInstance();
+      $plugin = $this->getPlugin();
       $sender->sendMessage($plugin->getPluginInfo());
    }
    
