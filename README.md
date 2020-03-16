@@ -37,8 +37,9 @@ this plugin will work
 **Features of plugin**<br>
 - Is a plugin to create boss using [EntityType](#entitytype)
 - Entity will not overlap with PureEntitiesX
-- support database Yaml and SQLite
-- Have language thai and english (You can edit the language you don't like at, `plugin_data/QuestPlugin/language`)
+- And this plugin will fix some bugs of PureEntitiesX
+- Support database Yaml and SQLite
+- Have language thai and english (You can edit the language you don't like at, `plugin_data/BossPlugin/language`)
 
 
 **How to use**<br>
