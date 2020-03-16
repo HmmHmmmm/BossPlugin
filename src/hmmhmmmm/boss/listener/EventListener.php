@@ -5,6 +5,7 @@ namespace hmmhmmmm\boss\listener;
 use hmmhmmmm\boss\Boss;
 use hmmhmmmm\boss\BossData;
 use hmmhmmmm\boss\utils\BossUtils;
+use revivalpmmp\pureentities\entity\monster\Monster;
 
 use pocketmine\Player;
 use pocketmine\entity\Entity;
@@ -14,6 +15,7 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDeathEvent;
 use pocketmine\command\ConsoleCommandSender;
 
+use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\nbt\tag\StringTag;
 
 class EventListener implements Listener{
@@ -33,6 +35,41 @@ class EventListener implements Listener{
    
    public function getPrefix(): string{
       return $this->prefix;
+   }
+   
+   public function onEntityDamage(EntityDamageEvent $event){
+      $entity = $event->getEntity();
+      if($entity instanceof Player){
+         $cause = $entity->getLastDamageCause();
+         $c = $cause === null ? EntityDamageEvent::CAUSE_CUSTOM : $cause->getCause();
+         if($c == EntityDamageEvent::CAUSE_ENTITY_ATTACK){
+            if($cause instanceof EntityDamageByEntityEvent){
+               $damager = $cause->getDamager();
+               if($damager instanceof Monster){
+                  if($damager->namedtag instanceof CompoundTag){
+                     if($damager->namedtag->hasTag(
+                        "Boss".$damager->getName(), StringTag::class
+                     )){
+                       $minDamage = BossData::getMinDamage(
+                          $damager->namedtag->getString("Boss".$damager->getName())
+                       );
+                       $maxDamage = BossData::getMaxDamage(
+                          $damager->namedtag->getString("Boss".$damager->getName())
+                       );
+                       $damager->setMinDamage($minDamage);
+                       $damager->setMaxDamage($maxDamage);
+                     }else{
+                       $damager->setMinDamage((float) $damager->getMinDamage());
+                       $damager->setMaxDamage((float) $damager->getMaxDamage());
+                     }
+                  }else{
+                     $damager->setMinDamage((float) $damager->getMinDamage());
+                     $damager->setMaxDamage((float) $damager->getMaxDamage());
+                  }
+               }
+            }
+         }
+      }
    }
    
    public function onEntityDeath(EntityDeathEvent $event){

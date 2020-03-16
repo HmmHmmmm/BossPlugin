@@ -77,6 +77,11 @@ class BossData{
       return $db->getEntityType($name);
    }
    
+   public static function getLevelFolderName(string $name): string{
+      $db = Boss::getInstance()->getDatabase();
+      return $db->getLevelName($name);
+   }
+   
    public static function getSpawn(string $name): Position{
       $db = Boss::getInstance()->getDatabase();
       return $db->getPosition($name);

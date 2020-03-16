@@ -19,11 +19,13 @@ class BossHusk extends Husk{
       if($this->namedtag instanceof CompoundTag){
          if($this->namedtag->hasTag("Boss".$this->getName(), StringTag::class)){
             $name = $this->namedtag->getString("Boss".$this->getName());
+            $minDamage = BossData::getMinDamage($name);
+            $maxDamage = BossData::getMaxDamage($name);
             $this->setHealth(BossData::getHealth($name));
             $this->health = BossData::getHealth($name);
             $this->speed = BossData::getSpeed($name);
-            $this->setMinDamage(BossData::getMinDamage($name));
-            $this->setMaxDamage(BossData::getMaxDamage($name));
+            $this->setMinDamage($minDamage);
+            $this->setMaxDamage($maxDamage);
             $this->setScale(BossData::getScale($name));
          }
       }

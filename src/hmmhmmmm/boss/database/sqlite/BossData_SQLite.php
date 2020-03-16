@@ -142,6 +142,11 @@ class BossData_SQLite implements Database{
       return $data[$name]["entityType"];
    }
    
+   public function getLevelName(string $name): string{
+      $data = $this->getData()->getAll();
+      return $data[$name]["level"];
+   }
+   
    public function getPosition(string $name): Position{
       $data = $this->getData()->getAll();
       return new Position($data[$name]["x"], $data[$name]["y"], $data[$name]["z"], $this->plugin->getServer()->getLevelByName($data[$name]["level"]));
