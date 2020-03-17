@@ -116,7 +116,7 @@ slapper-type: Human
 
 # Permissions
 ```
-boss.command:
+bossplugin.command.boss:
   default: op
 ```
 

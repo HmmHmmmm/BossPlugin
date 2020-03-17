@@ -32,7 +32,7 @@ class BossCommand extends BaseCommand implements PluginIdentifiableCommand{
    }
   
    public function prepare(): void{
-      $this->setPermission("boss.command");
+      $this->setPermission("bossplugin.command.boss");
       $subClass = [
          new Help($this->getPlugin()),
          new Info($this->getPlugin()),
