@@ -1,12 +1,12 @@
 ## BossPlugin
 [![](https://poggit.pmmp.io/shield.dl.total/BossPlugin)](https://poggit.pmmp.io/p/BossPlugin)
 
+download BossPlugin.phar version dev https://poggit.pmmp.io/ci/HmmHmmmm/BossPlugin/BossPlugin
 
 [Language English](#english)
 
 
 Create boss has unlimited And can create many forms
-
 
 BossGhast
 ![1](https://github.com/HmmHmmmm/BossPlugin/blob/master/images/3.1/1.jpg)
