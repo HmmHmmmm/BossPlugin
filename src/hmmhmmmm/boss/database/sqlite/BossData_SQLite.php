@@ -74,7 +74,7 @@ class BossData_SQLite implements Database{
                "x" => $pos->x,
                "y" => $pos->y,
                "z" => $pos->z,
-               "level" => $pos->level->getFolderName(),
+               "level" => $this->getLevelName($name),
                "isrespawntime" => $this->getIsRespawnTime($name),
                "respawntime" => $this->getRespawnTime($name),
                "deathRespawntime" => $this->getDeathRespawnTime($name),

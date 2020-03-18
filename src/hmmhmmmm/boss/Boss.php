@@ -13,33 +13,35 @@ use hmmhmmmm\boss\listener\EventListener;
 use hmmhmmmm\boss\scheduler\BossTask;
 use hmmhmmmm\boss\scheduler\SlapperUpdateTask;
 use hmmhmmmm\boss\ui\BossForm;
-use hmmhmmmm\boss\entity\BossBlaze;
-use hmmhmmmm\boss\entity\BossGhast;
-use hmmhmmmm\boss\entity\BossVex;
-use hmmhmmmm\boss\entity\BossMagmaCube;
-use hmmhmmmm\boss\entity\BossSlime;
-use hmmhmmmm\boss\entity\BossElderGuardian;
-use hmmhmmmm\boss\entity\BossGuardian;
-use hmmhmmmm\boss\entity\BossCaveSpider;
-use hmmhmmmm\boss\entity\BossCreeper;
-use hmmhmmmm\boss\entity\BossEnderman;
-use hmmhmmmm\boss\entity\BossEndermite;
-use hmmhmmmm\boss\entity\BossEvoker;
-use hmmhmmmm\boss\entity\BossHusk;
-use hmmhmmmm\boss\entity\BossPolarBear;
-use hmmhmmmm\boss\entity\BossIronGolem;
-use hmmhmmmm\boss\entity\BossPigZombie;
-use hmmhmmmm\boss\entity\BossShulker;
-use hmmhmmmm\boss\entity\BossSilverfish;
-use hmmhmmmm\boss\entity\BossSkeleton;
-use hmmhmmmm\boss\entity\BossSpider;
-use hmmhmmmm\boss\entity\BossStray;
-use hmmhmmmm\boss\entity\BossWitch;
-use hmmhmmmm\boss\entity\BossWitherSkeleton;
-use hmmhmmmm\boss\entity\BossWolf;
-use hmmhmmmm\boss\entity\BossZombie;
-use hmmhmmmm\boss\entity\BossZombiePigman;
-use hmmhmmmm\boss\entity\BossZombieVillager;
+use hmmhmmmm\boss\entity\fix\IronGolem;
+use hmmhmmmm\boss\entity\fly\BossBlaze;
+use hmmhmmmm\boss\entity\fly\BossGhast;
+use hmmhmmmm\boss\entity\fly\BossVex;
+use hmmhmmmm\boss\entity\jump\BossMagmaCube;
+use hmmhmmmm\boss\entity\jump\BossSlime;
+use hmmhmmmm\boss\entity\swim\BossElderGuardian;
+use hmmhmmmm\boss\entity\swim\BossGuardian;
+use hmmhmmmm\boss\entity\walk\BossCaveSpider;
+use hmmhmmmm\boss\entity\walk\BossCreeper;
+use hmmhmmmm\boss\entity\walk\BossEnderman;
+use hmmhmmmm\boss\entity\walk\BossEndermite;
+use hmmhmmmm\boss\entity\walk\BossEvoker;
+use hmmhmmmm\boss\entity\walk\BossHusk;
+use hmmhmmmm\boss\entity\walk\BossPolarBear;
+use hmmhmmmm\boss\entity\walk\BossIronGolem;
+use hmmhmmmm\boss\entity\walk\BossSnowGolem;
+use hmmhmmmm\boss\entity\walk\BossPigZombie;
+use hmmhmmmm\boss\entity\walk\BossShulker;
+use hmmhmmmm\boss\entity\walk\BossSilverfish;
+use hmmhmmmm\boss\entity\walk\BossSkeleton;
+use hmmhmmmm\boss\entity\walk\BossSpider;
+use hmmhmmmm\boss\entity\walk\BossStray;
+use hmmhmmmm\boss\entity\walk\BossWitch;
+use hmmhmmmm\boss\entity\walk\BossWitherSkeleton;
+use hmmhmmmm\boss\entity\walk\BossWolf;
+use hmmhmmmm\boss\entity\walk\BossZombie;
+use hmmhmmmm\boss\entity\walk\BossZombiePigman;
+use hmmhmmmm\boss\entity\walk\BossZombieVillager;
 use xenialdan\customui\API as XenialdanCustomUI;
 use CortexPE\Commando\PacketHooker;
 use poggit\libasynql\libasynql;
@@ -83,22 +85,24 @@ class Boss extends PluginBase{
       "Evoker",
       "Husk",
       "PolarBear",
-      //"IronGolem",
+      "IronGolem",
+      //"SnowGolem",
       "PigZombie",
-      //"Shulker",
+      "Shulker",
       "Silverfish",
       //"Skeleton",
       "Spider",
       //"Stray",
       "Witch",
       "WitherSkeleton",
-      "Wolf",
+      //"Wolf",
       "Zombie",
       "ZombiePigman",
       "ZombieVillager"
    ];
    
    public $entityClass = [
+      IronGolem::class,
       BossBlaze::class,
       BossGhast::class,
       BossVex::class,
@@ -113,6 +117,7 @@ class Boss extends PluginBase{
       BossEvoker::class,
       BossHusk::class,
       BossPolarBear::class,
+      BossSnowGolem::class,
       BossIronGolem::class,
       BossPigZombie::class,
       BossShulker::class,
@@ -122,7 +127,7 @@ class Boss extends PluginBase{
       BossStray::class,
       BossWitch::class,
       BossWitherSkeleton::class,
-      BossWolf::class,
+      //BossWolf::class,
       BossZombie::class,
       BossZombiePigman::class,
       BossZombieVillager::class

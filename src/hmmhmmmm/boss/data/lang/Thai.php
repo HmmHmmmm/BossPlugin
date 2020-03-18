@@ -29,7 +29,7 @@ class Thai{
          "command.info.description" => "§fเครดิตผู้สร้างปลั๊กอิน",
          "command.help.usage" => "/boss help",
          "command.help.description" => "§fความช่วยเหลือ",
-         "command.create.usage" => "/boss create <ตั้งชื่อบอส> <มอนเตอร์> <เลือด>",
+         "command.create.usage" => "/boss create <ตั้งชื่อบอส> <มอนเตอร์> <เลือด> <ดาเมจ>",
          "command.create.description" => "§fสร้างบอส",
          "command.create.error1" => "§cลอง: %1",
          "command.create.error2" => "§cบอส %1 มีอยู่แล้ว",

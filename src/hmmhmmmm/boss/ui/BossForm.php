@@ -137,6 +137,14 @@ class BossForm{
             return;
          }
          $name = $name[0];
+         if(BossData::isBoss($name)){
+            $text = $this->lang->getTranslate(
+               "command.create.error2",
+               [$name]
+            );
+            $this->Create($player, $text);
+            return;
+         }
          $respawntime = explode(" ", (int) $data[3]); 
          if($respawntime[0] == null){
             $text = $this->lang->getTranslate(
@@ -327,6 +335,14 @@ class BossForm{
             return;
          }
          $name = $name[0];
+         if(BossData::isBoss($name)){
+            $text = $this->lang->getTranslate(
+               "command.create.error2",
+               [$name]
+            );
+            $this->CreateObject($player, $text);
+            return;
+         }
          $health = explode(" ", (int) $data[3]); 
          if($health[0] == null){
             $text = $this->lang->getTranslate(

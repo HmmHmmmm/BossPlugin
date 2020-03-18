@@ -29,7 +29,7 @@ class English{
          "command.info.description" => "§fCredit of the plugin creator",
          "command.help.usage" => "/boss help",
          "command.help.description" => "§fHelp",
-         "command.create.usage" => "/boss create <NameTheBoss> <Monster> <Health>",
+         "command.create.usage" => "/boss create <NameTheBoss> <Monster> <Health> <Damage>",
          "command.create.description" => "§fCreate a boss",
          "command.create.error1" => "§cTry: %1",
          "command.create.error2" => "§cBoss %1 already exists",

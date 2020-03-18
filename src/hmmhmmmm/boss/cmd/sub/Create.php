@@ -35,6 +35,7 @@ class Create extends SubCommand{
       }
       $this->registerArgument(1, new EnumArgs("monster", $entityType, true));
       $this->registerArgument(2, new IntegerArgs("health", true));
+      $this->registerArgument(3, new IntegerArgs("damage", true));
    }
    
    public function onRun(CommandSender $sender, string $aliasUsed, array $args): void{
@@ -44,7 +45,7 @@ class Create extends SubCommand{
          $this->sendConsoleError($sender);
          return;
       }
-      if(count($args) < 3){
+      if(count($args) < 4){
          $sender->sendMessage($lang->getTranslate(
             "command.create.error1",
             [
@@ -72,6 +73,7 @@ class Create extends SubCommand{
          return;
       }
       $health = $args["health"];
+      $damage = $args["damage"];
       $db = Boss::getInstance()->getDatabase();
       $pos = $sender;
       $object = [
@@ -86,8 +88,8 @@ class Create extends SubCommand{
          "health" => (float) $health,
          "speed" => (float) 1.0,
          "scale" => (float) 1.0,
-         "minDamage" => (float) 5.0,
-         "maxDamage" => (float) 5.0,
+         "minDamage" => (float) $damage,
+         "maxDamage" => (float) $damage,
          "infoDrop" => "???",
          "commandDrop" => "??"
       ];

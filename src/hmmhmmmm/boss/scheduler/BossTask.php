@@ -39,11 +39,11 @@ class BossTask extends Task{
             }
             $pos = BossData::getSpawn($name);
             $level = $pos->getLevel();
-            if($this->plugin->getServer()->isLevelLoaded($level->getFolderName())){
-               if(count($level->getPlayers()) !== 0){
-                  BossManager::respawn($name);
-                  BossData::setRespawnTime($name, BossData::getIsRespawnTime($name));
-               }
+            if(count($level->getPlayers()) == 0){
+               BossData::setRespawnTime($name, 30);
+            }else{
+               BossManager::respawn($name);
+               BossData::setRespawnTime($name, BossData::getIsRespawnTime($name));
             }
          }
       }
