@@ -15,6 +15,16 @@ BossGhast
 BossSpiderBig
 ![2](https://github.com/HmmHmmmm/BossPlugin/blob/master/images/3.1/2.jpg)
 
+
+server of you will not lag if you `false` in `plugin_data\PureEntitiesX\config.yml`
+```
+# task definitions - to have full functionality, enable all!
+tasks:
+  spawn: false # set to true to enable spawn/unspawn tasks
+  async: false # set to true for mob equipment working and relogging tamed entities working
+  looking: false # set to true to enable entity interaction and enderman looking detection e.g.
+```
+
 •••••Bug•••••••••
 If you install the plugin TeaSpoon please `false` in
 `plugin_data\TeaSpoon\config.yml`
@@ -64,16 +74,16 @@ this plugin will work
 - Evoker
 - Husk
 - PolarBear
-- IronGolem `TODO`
+- IronGolem
 - PigZombie
-- Shulker `TODO`
+- Shulker
 - Silverfish
 - Skeleton `TODO`
 - Spider
 - Stray `TODO`
 - Witch
 - WitherSkeleton
-- Wolf
+- Wolf `TODO`
 - Zombie
 - ZombiePigman
 - ZombieVillager
