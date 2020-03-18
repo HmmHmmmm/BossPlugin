@@ -1,4 +1,5 @@
 ## BossPlugin
+[![](https://poggit.pmmp.io/shield.dl.total/BossPlugin)](https://poggit.pmmp.io/p/BossPlugin)
 
 
 [Language English](#english)
