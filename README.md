@@ -8,8 +8,6 @@
 Create boss has unlimited And can create many forms
 
 
-download BossPlugin.phar dev https://poggit.pmmp.io/ci/HmmHmmmm/BossPlugin/BossPlugin
-
 BossGhast
 ![1](https://github.com/HmmHmmmm/BossPlugin/blob/master/images/3.1/1.jpg)
 
