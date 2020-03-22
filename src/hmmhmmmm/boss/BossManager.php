@@ -4,6 +4,7 @@ namespace hmmhmmmm\boss;
 
 use revivalpmmp\pureentities\entity\BaseEntity;
 use hmmhmmmm\boss\utils\BossUtils;
+use revivalpmmp\pureentities\entity\monster\Monster;
 
 use pocketmine\entity\Entity;
 use pocketmine\level\Location;
@@ -16,9 +17,10 @@ class BossManager{
       $plugin = Boss::getInstance();
       $lang = $plugin->getLanguage();
       $bossUtils = new BossUtils();
+      $type = BossData::getEntityType($name);
       return $lang->getTranslate(
          "boss.respawninfo",
-         [$name, $bossUtils->sendTime(BossData::getRespawnTime($name))]
+         ["\n".$type." [".$name."]", $bossUtils->sendTime(BossData::getRespawnTime($name))]
       );
    }
    
@@ -39,8 +41,8 @@ class BossManager{
       }
       $level = BossData::getSpawn($name)->getLevel();
       foreach($level->getEntities() as $entity){
-         if($entity->namedtag instanceof CompoundTag){
-            if($entity->namedtag->hasTag("Boss".BossData::getEntityType($name), StringTag::class)){
+         if($entity instanceof Monster){
+            if($entity->getName() == "Boss".BossData::getEntityType($name)){ 
                $entity->close();
             }
          }
@@ -61,32 +63,36 @@ class BossManager{
       }
       $entityCount = 0;
       foreach($level->getEntities() as $entity){
-         if($entity->namedtag instanceof CompoundTag){
-            if($entity->namedtag->hasTag("Boss".BossData::getEntityType($name), StringTag::class)){
+         if($entity instanceof Monster){
+            if($entity->getName() == "Boss".BossData::getEntityType($name)){
                $entityCount++;
             }
          }
       }
       if($entityCount == 0){
-         $nbt = Entity::createBaseNBT($pos->asVector3(), null, $pos instanceof Location ? $pos->yaw : 0, $pos instanceof Location ? $pos->pitch : 0);
-         $entity = Entity::createEntity("Boss".BossData::getEntityType($name), $pos->getLevel(), $nbt);
-         $minDamage = BossData::getMinDamage($name);
-         $maxDamage = BossData::getMaxDamage($name);
-         $entity->namedtag->setString("Boss".$entity->getName(), $name);
-         $entity->setHealth(BossData::getHealth($name));
-         $entity->health = BossData::getHealth($name);
-         $entity->speed = BossData::getSpeed($name);
-         $entity->setMinDamage($minDamage);
-         $entity->setMaxDamage($maxDamage);
-         $entity->setScale(BossData::getScale($name));
-         $entity->setNameTag($name);
-         $entity->setNameTagAlwaysVisible(true);
-         $entity->setNameTagVisible(true);
-         $entity->spawnToAll();
-         $plugin->getServer()->broadcastMessage($plugin->getPrefix()." ".$plugin->getLanguage()->getTranslate(
-            "boss.spawn",
-            [$entity->getName(), $name]
-         ));
+         $entityList = array_flip($plugin->entityList);
+         $type = BossData::getEntityType($name);
+         if(isset($entityList[$type])){
+            $nbt = Entity::createBaseNBT($pos->asVector3(), null, $pos instanceof Location ? $pos->yaw : 0, $pos instanceof Location ? $pos->pitch : 0);
+            $entity = Entity::createEntity("Boss".$type, $pos->getLevel(), $nbt);
+            $entity->boss_data = $name;
+            $entity->setHealth(BossData::getHealth($name));
+            $entity->health = BossData::getHealth($name);
+            $entity->speed = BossData::getSpeed($name);
+            $entity->setMinDamage(BossData::getMinDamage($name));
+            $entity->setMaxDamage(BossData::getMaxDamage($name));
+            $entity->setScale(BossData::getScale($name));
+            $entity->setNameTag($name);
+            $entity->setNameTagAlwaysVisible(true);
+            $entity->setNameTagVisible(true);
+            $entity->spawnToAll();
+            $plugin->getServer()->broadcastMessage($plugin->getPrefix()." ".$plugin->getLanguage()->getTranslate(
+               "boss.spawn",
+               [$entity->getName(), $name]
+            ));
+         }else{
+            $plugin->getLogger()->error("§cBoss ".$name ." entity ".$type." not found");
+         }
       }
    }
    
@@ -107,8 +113,8 @@ class BossManager{
       }
       if(count($level->getPlayers()) !== 0){
          foreach($level->getEntities() as $entity){
-            if($entity->namedtag instanceof CompoundTag){
-               if($entity->namedtag->hasTag("Boss".BossData::getEntityType($name), StringTag::class)){
+            if($entity instanceof Monster){
+               if($entity->getName() == "Boss".BossData::getEntityType($name)){
                   $entity->close();
                }
             }

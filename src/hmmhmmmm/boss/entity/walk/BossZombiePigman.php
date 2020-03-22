@@ -16,70 +16,52 @@ use pocketmine\event\entity\EntityDamageEvent;
 
 class BossZombiePigman extends ZombiePigman{
    public $health = 20;
-   
+   public $boss_data = "0xAAA001";
+  
+   public function getName(): string{
+      $name = $this->boss_data;
+      if(BossData::isBoss($name)){
+         return "BossZombiePigman";
+      }else{
+         return parent::getName();
+      }
+   }
+
    public function attackEntity(Entity $player){
       if($this->attackDelay > 10 && $this->distanceSquared($player) < 2){
          $this->attackDelay = 0;
-         $damage = $this->getDamage();
-         if($this->getMobEquipment() !== null){
-            $damage = $damage + $this->getMobEquipment()->getWeaponDamageToAdd();
+         if($player instanceof Player){
+            $damage = $this->getDamage();
+            if($this->getMobEquipment() !== null){
+               $damage = $damage + $this->getMobEquipment()->getWeaponDamageToAdd();
+            }
+            $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $damage);
+            $player->attack($ev);
+            $this->checkTamedMobsAttack($player);
          }
-         $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $damage);
-         $player->attack($ev);
-         $this->checkTamedMobsAttack($player);
       }
    }
    
-   public function initEntity() : void{
-      parent::initEntity();
-      if($this->namedtag instanceof CompoundTag){
-         if($this->namedtag->hasTag("Boss".$this->getName(), StringTag::class)){
-            $name = $this->namedtag->getString("Boss".$this->getName());
-            $this->setHealth(BossData::getHealth($name));
-            $this->health = BossData::getHealth($name);
-            $this->speed = BossData::getSpeed($name);
-            $this->setMinDamage(BossData::getMinDamage($name));
-            $this->setMaxDamage(BossData::getMaxDamage($name));
-            $this->setScale(BossData::getScale($name));
-         }
-      }
-   }
-  
    public function getMaxHealth(): int{
-      if($this->namedtag instanceof CompoundTag){
-         if($this->namedtag->hasTag("Boss".$this->getName(), StringTag::class)){
-            if(BossData::isBoss($this->namedtag->getString("Boss".$this->getName()))){
-               return BossData::getHealth($this->namedtag->getString("Boss".$this->getName()));
-            }else{
-               return $this->health;
-            }
-         }else{
-            return $this->health;
-         }
+      $name = $this->boss_data;
+      if(BossData::isBoss($name)){
+         return BossData::getHealth($name);
       }else{
          return $this->health;
       }
    }
    
    public function entityBaseTick(int $tickDiff = 1): bool{
-      if($this->namedtag instanceof CompoundTag){
-         $hasUpdate = parent::entityBaseTick($tickDiff);
-         if($this->namedtag->hasTag("Boss".$this->getName(), StringTag::class)){
-            $name = $this->namedtag->getString("Boss".$this->getName());
-            if(BossData::isBoss($name)){
-               $this->setNameTag($name." §c(".$this->getHealth()."/".$this->getMaxHealth().")");
-               $this->setNameTagAlwaysVisible(true);
-               $this->setNameTagVisible(true);
-               if($this->isOnFire()){
-                  $this->extinguish();
-               }
-               return $hasUpdate;
-            }else{
-               return parent::entityBaseTick($tickDiff);
-            }
-         }else{
-            return parent::entityBaseTick($tickDiff);
+      $hasUpdate = parent::entityBaseTick($tickDiff);
+      $name = $this->boss_data;
+      if(BossData::isBoss($name)){
+         $this->setNameTag($name." §c(".$this->getHealth()."/".$this->getMaxHealth().")");
+         $this->setNameTagAlwaysVisible(true);
+         $this->setNameTagVisible(true);
+         if($this->isOnFire()){
+            $this->extinguish();
          }
+         return $hasUpdate;
       }else{
          return parent::entityBaseTick($tickDiff);
       }
@@ -87,7 +69,9 @@ class BossZombiePigman extends ZombiePigman{
    
    public function targetOption(Creature $creature, float $distance) : bool{
       if(!($creature instanceof SlapperHuman)){
-         return parent::targetOption($creature, $distance);
+         if($creature instanceof Player){
+            return parent::targetOption($creature, $distance);
+         }
       }
       return false;
    }

@@ -21,74 +21,49 @@ use pocketmine\item\Item;
 class IronGolem extends WalkingMonster implements Monster{
    const NETWORK_ID = Data::NETWORK_IDS["iron_golem"];
    public $health = 100;
-   
-   public function getName() : string{
-      return "IronGolem";
-   }
-   
-   public function attackEntity(Entity $player): void{
-      if($this->attackDelay > 10 && $this->distanceSquared($player) < 4){
-         $this->attackDelay = 0;
-         $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
-         $player->attack($ev);
-         $player->setMotion(new Vector3(0, 0.7, 0));
-         $this->checkTamedMobsAttack($player);
-      }
-   }
-   
-   public function initEntity() : void{
-      parent::initEntity();
-      if($this->namedtag instanceof CompoundTag){
-         if($this->namedtag->hasTag("Boss".$this->getName(), StringTag::class)){
-            $name = $this->namedtag->getString("Boss".$this->getName());
-            $this->setHealth(BossData::getHealth($name));
-            $this->health = BossData::getHealth($name);
-            $this->speed = BossData::getSpeed($name);
-            $this->setMinDamage(BossData::getMinDamage($name));
-            $this->setMaxDamage(BossData::getMaxDamage($name));
-            $this->setScale(BossData::getScale($name));
-         }
-      }else{
-         $this->speed = 0.8;
-         $this->setHealth($this->health);
-         $this->setFriendly(true);
-         $this->setDamage([0, 21, 21, 21]);
-         $this->setMinDamage([0, 7, 7, 7]);
-      }
-   }
+   public $boss_data = "0xAAA001";
   
-   public function getMaxHealth(): int{
-      if($this->namedtag instanceof CompoundTag){
-         if($this->namedtag->hasTag("Boss".$this->getName(), StringTag::class)){
-            if(BossData::isBoss($this->namedtag->getString("Boss".$this->getName()))){
-               return BossData::getHealth($this->namedtag->getString("Boss".$this->getName()));
-            }else{
-               return $this->health;
-            }
-         }else{
-            return $this->health;
+   public function getName(): string{
+      $name = $this->boss_data;
+      if(BossData::isBoss($name)){
+         return "BossIronGolem";
+      }else{
+         return "IronGolem";
+      }
+   }
+
+   public function attackEntity(Entity $player){
+      if($this->attackDelay > 10 && $this->distanceSquared($player) < 2){
+         $this->attackDelay = 0;
+         if($player instanceof Player){
+            $ev = new EntityDamageByEntityEvent($this, $player, EntityDamageEvent::CAUSE_ENTITY_ATTACK, $this->getDamage());
+            $player->attack($ev);
+            $player->setMotion(new Vector3(0, 0.7, 0));
+            $this->checkTamedMobsAttack($player);
          }
+      }
+   }
+   
+   public function getMaxHealth(): int{
+      $name = $this->boss_data;
+      if(BossData::isBoss($name)){
+         return BossData::getHealth($name);
       }else{
          return $this->health;
       }
    }
    
    public function entityBaseTick(int $tickDiff = 1): bool{
-      if($this->namedtag instanceof CompoundTag){
-         $hasUpdate = parent::entityBaseTick($tickDiff);
-         if($this->namedtag->hasTag("Boss".$this->getName(), StringTag::class)){
-            $name = $this->namedtag->getString("Boss".$this->getName());
-            if(BossData::isBoss($name)){
-               $this->setNameTag($name." §c(".$this->getHealth()."/".$this->getMaxHealth().")");
-               $this->setNameTagAlwaysVisible(true);
-               $this->setNameTagVisible(true);
-               return $hasUpdate;
-            }else{
-               return parent::entityBaseTick($tickDiff);
-            }
-         }else{
-            return parent::entityBaseTick($tickDiff);
+      $hasUpdate = parent::entityBaseTick($tickDiff);
+      $name = $this->boss_data;
+      if(BossData::isBoss($name)){
+         $this->setNameTag($name." §c(".$this->getHealth()."/".$this->getMaxHealth().")");
+         $this->setNameTagAlwaysVisible(true);
+         $this->setNameTagVisible(true);
+         if($this->isOnFire()){
+            $this->extinguish();
          }
+         return $hasUpdate;
       }else{
          return parent::entityBaseTick($tickDiff);
       }
@@ -96,20 +71,8 @@ class IronGolem extends WalkingMonster implements Monster{
    
    public function targetOption(Creature $creature, float $distance) : bool{
       if(!($creature instanceof SlapperHuman)){
-         if(!($this->namedtag instanceof CompoundTag)){
-            if(!($creature instanceof Player)){
-               return $creature->isAlive() && $distance <= 60;
-            }
-         }else{
-            if($this->namedtag->hasTag("Boss".$this->getName(), StringTag::class)){
-               return $this instanceof Monster
-                  && (!($creature instanceof Player)
-                  || ($creature->isSurvival()
-                  && $creature->spawned))
-                  && $creature->isAlive()
-                  && !$creature->isClosed()
-                  && $distance <= 81;
-            }
+         if($creature instanceof Player){
+            return parent::targetOption($creature, $distance);
          }
       }
       return false;

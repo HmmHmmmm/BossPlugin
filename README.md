@@ -8,20 +8,16 @@ download BossPlugin.phar version dev https://poggit.pmmp.io/ci/HmmHmmmm/BossPlug
 
 Create boss has unlimited And can create many forms
 
-BossGhast
-![1](https://github.com/HmmHmmmm/BossPlugin/blob/master/images/3.1/1.jpg)
 
-BossSpiderBig
-![2](https://github.com/HmmHmmmm/BossPlugin/blob/master/images/3.1/2.jpg)
+![1](https://github.com/HmmHmmmm/BossPlugin/blob/master/images/3.20/1.jpg)
 
 
 server of you will not lag if you `false` in `plugin_data\PureEntitiesX\config.yml`
 ```
-# task definitions - to have full functionality, enable all!
 tasks:
-  spawn: false # set to true to enable spawn/unspawn tasks
-  async: false # set to true for mob equipment working and relogging tamed entities working
-  looking: false # set to true to enable entity interaction and enderman looking detection e.g.
+  spawn: false
+  async: false
+  looking: false
 ```
 
 •••••Bug•••••••••
@@ -29,8 +25,7 @@ If you install the plugin TeaSpoon please `false` in
 `plugin_data\TeaSpoon\config.yml`
 ```
 entities:
- # Weather to register Vanilla Entities (Set to false if you're going to use a MobAI Plugin such as, PureEntitiesX etc...) or not
- register: true
+ register: false
 ```
 ••••••••••••••••••
 
@@ -45,8 +40,7 @@ this plugin will work
 
 **Features of plugin**<br>
 - Is a plugin to create boss using [EntityType](#entitytype)
-- Entity will not overlap with PureEntitiesX
-- And this plugin will fix some bugs of PureEntitiesX
+- And this plugin will fix some bugs of PureEntitiesX [List](#list)
 - Support database Yaml and SQLite
 - Have language thai and english (You can edit the language you don't like at, `plugin_data/BossPlugin/language`)
 
@@ -59,7 +53,7 @@ this plugin will work
 - `/boss` : open ui
 
 # EntityType
-- Blaze 
+- Blaze `TODO`
 - Ghast
 - Vex
 - MagmaCube `TODO`
@@ -74,15 +68,17 @@ this plugin will work
 - Husk
 - PolarBear
 - IronGolem
+- SnowGolem `TODO`
 - PigZombie
 - Shulker
 - Silverfish
-- Skeleton `TODO`
+- Skeleton
 - Spider
-- Stray `TODO`
+- Stray
+- Vindicator
 - Witch
 - WitherSkeleton
-- Wolf `TODO`
+- Wolf
 - Zombie
 - ZombiePigman
 - ZombieVillager
@@ -97,6 +93,14 @@ this plugin will work
 - max_damage
 - message_drop
 - command_drop
+
+# List fix bug of PureEntitiesX
+- PureEntitiesX 0.6.3
+- pocketmine\entity\Living::getArmorInventory() null
+- getContents() null
+- When Ghast shot Fireball will not see.
+- Skeleton and Stray don't shot players.
+
 
 # Config
 ```

@@ -84,7 +84,7 @@ class Create extends SubCommand{
          "level" => $pos->level->getFolderName(),
          "isrespawntime" => 600,
          "respawntime" => 600,
-         "deathRespawntime" => 5,
+         "deathRespawntime" => 15,
          "health" => (float) $health,
          "speed" => (float) 1.0,
          "scale" => (float) 1.0,

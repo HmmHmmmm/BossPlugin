@@ -37,41 +37,6 @@ class EventListener implements Listener{
       return $this->prefix;
    }
    
-   public function onEntityDamage(EntityDamageEvent $event){
-      $entity = $event->getEntity();
-      if($entity instanceof Player){
-         $cause = $entity->getLastDamageCause();
-         $c = $cause === null ? EntityDamageEvent::CAUSE_CUSTOM : $cause->getCause();
-         if($c == EntityDamageEvent::CAUSE_ENTITY_ATTACK){
-            if($cause instanceof EntityDamageByEntityEvent){
-               $damager = $cause->getDamager();
-               if($damager instanceof Monster){
-                  if($damager->namedtag instanceof CompoundTag){
-                     if($damager->namedtag->hasTag(
-                        "Boss".$damager->getName(), StringTag::class
-                     )){
-                       $minDamage = BossData::getMinDamage(
-                          $damager->namedtag->getString("Boss".$damager->getName())
-                       );
-                       $maxDamage = BossData::getMaxDamage(
-                          $damager->namedtag->getString("Boss".$damager->getName())
-                       );
-                       $damager->setMinDamage($minDamage);
-                       $damager->setMaxDamage($maxDamage);
-                     }else{
-                       $damager->setMinDamage((float) $damager->getMinDamage());
-                       $damager->setMaxDamage((float) $damager->getMaxDamage());
-                     }
-                  }else{
-                     $damager->setMinDamage((float) $damager->getMinDamage());
-                     $damager->setMaxDamage((float) $damager->getMaxDamage());
-                  }
-               }
-            }
-         }
-      }
-   }
-   
    public function onEntityDeath(EntityDeathEvent $event){
       $entity = $event->getEntity();
       $cause = $entity->getLastDamageCause();
@@ -82,8 +47,8 @@ class EventListener implements Listener{
          if($cause instanceof EntityDamageByEntityEvent){
             $damager = $cause->getDamager();
             if($damager instanceof Player){
-               if($entity->namedtag->hasTag("Boss".$entity->getName(), StringTag::class)){
-                  $bossName = $entity->namedtag->getString("Boss".$entity->getName());
+               if(!empty($entity->boss_data)){
+                  $bossName = $entity->boss_data;
                   if(BossData::isBoss($bossName)){
                      $bossUtils = new BossUtils();
                      $command = str_replace("{player}", $damager->getName(), BossData::getCommandDrop($bossName));
@@ -100,6 +65,29 @@ class EventListener implements Listener{
                            $bossName
                         ]
                      ));
+                  }
+               }
+            }
+         }
+      }
+   }
+   
+   public function onEntityDamage(EntityDamageEvent $event){
+      $entity = $event->getEntity();
+      if($entity instanceof Player){
+         $cause = $entity->getLastDamageCause();
+         $c = $cause === null ? EntityDamageEvent::CAUSE_CUSTOM : $cause->getCause();
+         if($c == EntityDamageEvent::CAUSE_ENTITY_ATTACK){
+            if($cause instanceof EntityDamageByEntityEvent){
+               $damager = $cause->getDamager();
+               if($damager instanceof Monster){
+                  $bossName = $damager->boss_data;
+                  if(BossData::isBoss($bossName)){
+                     $damager->setMinDamage(BossData::getMinDamage($bossName)); 
+                     $damager->setMaxDamage(BossData::getMaxDamage($bossName));
+                  }else{
+                     $damager->setMinDamage((float) $damager->getMinDamage()); 
+                     $damager->setMaxDamage((float) $damager->getMaxDamage());
                   }
                }
             }

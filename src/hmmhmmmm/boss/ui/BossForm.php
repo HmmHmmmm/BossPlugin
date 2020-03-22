@@ -145,7 +145,7 @@ class BossForm{
             $this->Create($player, $text);
             return;
          }
-         $respawntime = explode(" ", (int) $data[3]); 
+         $respawntime = explode(" ", $data[3]); 
          if($respawntime[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -162,8 +162,8 @@ class BossForm{
             $this->Create($player, $text);
             return;
          }
-         $respawntime = $respawntime[0];
-         $deathRespawntime = explode(" ", (int) $data[4]); 
+         $respawntime = (int) $respawntime[0];
+         $deathRespawntime = explode(" ", $data[4]); 
          if($deathRespawntime[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -180,8 +180,8 @@ class BossForm{
             $this->Create($player, $text);
             return;
          }
-         $deathRespawntime = $deathRespawntime[0];
-         $health = explode(" ", (int) $data[5]); 
+         $deathRespawntime = (int) $deathRespawntime[0];
+         $health = explode(" ", $data[5]); 
          if($health[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -198,8 +198,8 @@ class BossForm{
             $this->Create($player, $text);
             return;
          }
-         $health = $health[0];
-         $speed = explode(" ", (float) $data[6]); 
+         $health = (int) $health[0];
+         $speed = explode(" ", $data[6]); 
          if($speed[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -216,8 +216,8 @@ class BossForm{
             $this->Create($player, $text);
             return;
          }
-         $speed = $speed[0];
-         $scale = explode(" ", (float) $data[7]); 
+         $speed = (float) $speed[0];
+         $scale = explode(" ", $data[7]); 
          if($scale[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -234,8 +234,8 @@ class BossForm{
             $this->Create($player, $text);
             return;
          }
-         $scale = $scale[0];
-         $minDamage = explode(" ", (int) $data[8]); 
+         $scale = (float) $scale[0];
+         $minDamage = explode(" ", $data[8]); 
          if($minDamage[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -252,8 +252,8 @@ class BossForm{
             $this->Create($player, $text);
             return;
          }
-         $minDamage = $minDamage[0];
-         $maxDamage = explode(" ", (int) $data[9]); 
+         $minDamage = (int) $minDamage[0];
+         $maxDamage = explode(" ", $data[9]); 
          if($maxDamage[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -270,7 +270,7 @@ class BossForm{
             $this->Create($player, $text);
             return;
          }
-         $maxDamage = $maxDamage[0];
+         $maxDamage = (int) $maxDamage[0];
          $infoDrop = explode(" ", $data[10]); 
          if($infoDrop[0] == null){
             $text = $this->lang->getTranslate(
@@ -343,7 +343,7 @@ class BossForm{
             $this->CreateObject($player, $text);
             return;
          }
-         $health = explode(" ", (int) $data[3]); 
+         $health = explode(" ", $data[3]); 
          if($health[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -360,7 +360,7 @@ class BossForm{
             $this->CreateObject($player, $text);
             return;
          }
-         $health = $health[0];
+         $health = (int) $health[0];
          
          $db = Boss::getInstance()->getDatabase();
          $pos = $player;
@@ -372,7 +372,7 @@ class BossForm{
             "level" => $pos->level->getFolderName(),
             "isrespawntime" => 600,
             "respawntime" => 600,
-            "deathRespawntime" => 5,
+            "deathRespawntime" => 15,
             "health" => (float) $health,
             "speed" => (float) 1.0,
             "scale" => (float) 1.0,
@@ -492,7 +492,7 @@ class BossForm{
          if($data == null){
             return;
          }
-         $deathRespawntime = explode(" ", (int) $data[1]); 
+         $deathRespawntime = explode(" ", $data[1]); 
          if($deathRespawntime[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -509,8 +509,8 @@ class BossForm{
             $this->Edit2($player, $bossName, $text);
             return;
          }
-         $deathRespawntime = $deathRespawntime[0];
-         $health = explode(" ", (int) $data[2]); 
+         $deathRespawntime = (int) $deathRespawntime[0];
+         $health = explode(" ", $data[2]); 
          if($health[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -527,8 +527,8 @@ class BossForm{
             $this->Edit2($player, $bossName, $text);
             return;
          }
-         $health = $health[0];
-         $speed = explode(" ", (float) $data[3]); 
+         $health = (int) $health[0];
+         $speed = explode(" ", $data[3]); 
          if($speed[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -545,8 +545,8 @@ class BossForm{
             $this->Edit2($player, $bossName, $text);
             return;
          }
-         $speed = $speed[0];
-         $scale = explode(" ", (float) $data[4]); 
+         $speed = (float) $speed[0];
+         $scale = explode(" ", $data[4]); 
          if($scale[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -563,8 +563,8 @@ class BossForm{
             $this->Edit2($player, $bossName, $text);
             return;
          }
-         $scale = $scale[0];
-         $minDamage = explode(" ", (int) $data[5]); 
+         $scale = (float) $scale[0];
+         $minDamage = explode(" ", $data[5]); 
          if($minDamage[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -581,8 +581,8 @@ class BossForm{
             $this->Edit2($player, $bossName, $text);
             return;
          }
-         $minDamage = $minDamage[0];
-         $maxDamage = explode(" ", (int) $data[6]); 
+         $minDamage = (int) $minDamage[0];
+         $maxDamage = explode(" ", $data[6]); 
          if($maxDamage[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -599,7 +599,7 @@ class BossForm{
             $this->Edit2($player, $bossName, $text);
             return;
          }
-         $maxDamage = $maxDamage[0];
+         $maxDamage = (int) $maxDamage[0];
          $infoDrop = explode(" ", $data[7]); 
          if($infoDrop[0] == null){
             $text = $this->lang->getTranslate(
@@ -650,7 +650,7 @@ class BossForm{
          if($data == null){
             return;
          }
-         $respawntime = explode(" ", (int) $data[1]); 
+         $respawntime = explode(" ", $data[1]); 
          if($respawntime[0] == null){
             $text = $this->lang->getTranslate(
                "form.create.error2",
@@ -667,7 +667,7 @@ class BossForm{
             $this->SetRespawnTime($player, $bossName, $text);
             return;
          }
-         $respawntime = $respawntime[0];
+         $respawntime = (int) $respawntime[0];
          BossData::setIsRespawnTime($bossName, $respawntime);
          BossData::setRespawnTime($bossName, $respawntime);
          $bossUtils = new BossUtils();

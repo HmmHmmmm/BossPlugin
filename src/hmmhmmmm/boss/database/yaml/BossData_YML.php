@@ -29,7 +29,9 @@ class BossData_YML implements Database{
    }
    
    public function close(): void{
-   
+      foreach($this->getAll() as $name){
+         //$this->setRespawnTime($name, 0);
+      }
    }
    
    public function reset(): void{

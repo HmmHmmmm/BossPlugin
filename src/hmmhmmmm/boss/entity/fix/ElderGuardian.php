@@ -1,8 +1,10 @@
 <?php
 
-namespace hmmhmmmm\boss\entity\jump;
+namespace hmmhmmmm\boss\entity\fix;
 
-use revivalpmmp\pureentities\entity\monster\jumping\MagmaCube;
+use revivalpmmp\pureentities\entity\monster\Monster;
+use revivalpmmp\pureentities\data\Data;
+use revivalpmmp\pureentities\entity\monster\WalkingMonster;
 use slapper\entities\SlapperHuman;
 use hmmhmmmm\boss\BossData;
 
@@ -14,21 +16,22 @@ use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\entity\EntityDamageEvent;
 
-class BossMagmaCube extends MagmaCube{
-   public $health = 16;
+class ElderGuardian extends WalkingMonster implements Monster{
+   const NETWORK_ID = Data::NETWORK_IDS["elder_guardian"];
+   public $health = 80;
    public $boss_data = "0xAAA001";
   
    public function getName(): string{
       $name = $this->boss_data;
       if(BossData::isBoss($name)){
-         return "BossMagmaCube";
+         return "BossElderGuardian";
       }else{
-         return parent::getName();
+         return "ElderGuardian";
       }
    }
 
    public function attackEntity(Entity $player){
-      if($this->attackDelay > 10 && $this->distanceSquared($player) < 1){
+      if($this->attackDelay > 10 && $this->distanceSquared($player) < 4){
          $this->attackDelay = 0;
          if($player instanceof Player){
             $damage = $this->getDamage();

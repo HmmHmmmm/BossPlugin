@@ -13,7 +13,11 @@ use hmmhmmmm\boss\listener\EventListener;
 use hmmhmmmm\boss\scheduler\BossTask;
 use hmmhmmmm\boss\scheduler\SlapperUpdateTask;
 use hmmhmmmm\boss\ui\BossForm;
+use hmmhmmmm\boss\entity\projectile\LargeFireball;
+use hmmhmmmm\boss\entity\projectile\SmallFireball;
 use hmmhmmmm\boss\entity\fix\IronGolem;
+use hmmhmmmm\boss\entity\fix\ElderGuardian;
+use hmmhmmmm\boss\entity\fix\Guardian;
 use hmmhmmmm\boss\entity\fly\BossBlaze;
 use hmmhmmmm\boss\entity\fly\BossGhast;
 use hmmhmmmm\boss\entity\fly\BossVex;
@@ -36,6 +40,7 @@ use hmmhmmmm\boss\entity\walk\BossSilverfish;
 use hmmhmmmm\boss\entity\walk\BossSkeleton;
 use hmmhmmmm\boss\entity\walk\BossSpider;
 use hmmhmmmm\boss\entity\walk\BossStray;
+use hmmhmmmm\boss\entity\walk\BossVindicator;
 use hmmhmmmm\boss\entity\walk\BossWitch;
 use hmmhmmmm\boss\entity\walk\BossWitherSkeleton;
 use hmmhmmmm\boss\entity\walk\BossWolf;
@@ -71,7 +76,7 @@ class Boss extends PluginBase{
    ];
    
    public $entityList = [
-      "Blaze",
+      //"Blaze",
       "Ghast",
       "Vex", 
       //"MagmaCube",
@@ -90,28 +95,33 @@ class Boss extends PluginBase{
       "PigZombie",
       "Shulker",
       "Silverfish",
-      //"Skeleton",
+      "Skeleton",
       "Spider",
-      //"Stray",
+      "Stray",
+      "Vindicator",
       "Witch",
       "WitherSkeleton",
-      //"Wolf",
+      "Wolf",
       "Zombie",
       "ZombiePigman",
       "ZombieVillager"
    ];
    
    public $entityClass = [
+      LargeFireball::class,
+      SmallFireball::class,
       IronGolem::class,
+      ElderGuardian::class,
+      Guardian::class,
       BossBlaze::class,
       BossGhast::class,
       BossVex::class,
-      //BossMagmaCube::class,
-      //BossSlime::class,
+      BossMagmaCube::class, 
+      BossSlime::class,
       BossElderGuardian::class,
       BossGuardian::class,
       BossCaveSpider::class,
-      BossCreeper::class,
+      BossCreeper::class, 
       BossEnderman::class,
       BossEndermite::class,
       BossEvoker::class,
@@ -125,9 +135,10 @@ class Boss extends PluginBase{
       BossSkeleton::class,
       BossSpider::class,
       BossStray::class,
+      BossVindicator::class,
       BossWitch::class,
       BossWitherSkeleton::class,
-      //BossWolf::class,
+      BossWolf::class, 
       BossZombie::class,
       BossZombiePigman::class,
       BossZombieVillager::class
