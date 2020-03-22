@@ -40,7 +40,7 @@ this plugin will work
 
 **Features of plugin**<br>
 - Is a plugin to create boss using [EntityType](#entitytype)
-- And this plugin will fix some bugs of PureEntitiesX [List](#list)
+- And this plugin will fix some bugs of PureEntitiesX [List](#list fix bug of pureentitiesx)
 - Support database Yaml and SQLite
 - Have language thai and english (You can edit the language you don't like at, `plugin_data/BossPlugin/language`)
 
