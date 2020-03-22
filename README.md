@@ -40,7 +40,7 @@ this plugin will work
 
 **Features of plugin**<br>
 - Is a plugin to create boss using [EntityType](#entitytype)
-- And this plugin will fix some bugs of PureEntitiesX [List](#list fix bug of pureentitiesx)
+- And this plugin will fix some bugs of PureEntitiesX [List](#fixbugpureentitiesx)
 - Support database Yaml and SQLite
 - Have language thai and english (You can edit the language you don't like at, `plugin_data/BossPlugin/language`)
 
@@ -94,8 +94,8 @@ this plugin will work
 - message_drop
 - command_drop
 
-# List fix bug of PureEntitiesX
-- PureEntitiesX 0.6.3
+# FixBugPureEntitiesX
+- List fix bug of PureEntitiesX 0.6.3
 - pocketmine\entity\Living::getArmorInventory() null
 - getContents() null
 - When Ghast shot Fireball will not see.
